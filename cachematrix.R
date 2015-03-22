@@ -1,19 +1,20 @@
-## The makeCacheMatrix and cacheSolve functions work together to form a system
-## that supports a matrix with a cacheable inverse. The makeCacheMatrix function
-## provides the list of functions that make it possible for cacheSolve to store
-## and look for a cache for the inverse of the matrix contained within the
-## makeCacheMatrix environment.
+## The makeCacheMatrix and cacheSolve functions work together to form a system 
+## that supports a matrix type with a cacheable inverse. The makeCacheMatrix
+## function provides the list of functions that make it possible for cacheSolve
+## to store and look for a cache of the inverse of the matrix contained within
+## the makeCacheMatrix environment.
 
-## Function acts like a class constructor in that it intializes an internally
-## held matrix. The return values is a list of functions that behave like class
-## methods for getting and setting the internally held matrix and cached inverse
-## of internally held matrix.
+
+## Function that acts like a class constructor in that it intializes an
+## internally held matrix. The return value is a list of functions that behave
+## like class methods for getting and setting the internally held matrix and
+## cached inverse of internally held matrix.
 
 makeCacheMatrix <- function(x = matrix()) {
     m <- NULL
     set <- function(y) {
         # Note that this type of assignment makes the parent's environment
-        # accessible to this inner funtions environment.
+        # accessible to this inner funtion's environment.
         x <<- y
         m <<- NULL
     }
@@ -26,13 +27,14 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Function that operates on the list of functions returned from 
-## makeCacheMatrix. So, effectively the function operates on a cacheable inverse
-## matrix object (i.e., the environment of the list of functions that contains a
-## matrix and inverse). If the inverse isn't presently cached, it is computed, 
-## stored, and returned. If the inverse is cached, it is retrieved from the 
-## matrix object, a notfication is printed, and the inverse is returned. It is
-## assumed that the matrix is always invertible.
+## Computes the inverse of a matrix. Internally, operates on the list of
+## functions returned from makeCacheMatrix. So, effectively the function
+## operates on a cacheable inverse matrix "object" (i.e., the environment that
+## contains a matrix, cached inverse, and functions for getting and setting the
+## matrix and its inverse). If the inverse isn't presently cached, it is
+## computed, stored inside the matrix object, and returned. If the inverse is
+## cached, it is retrieved from the matrix object, a notfication is printed, and
+## the inverse is returned. It is assumed that the matrix is always invertible.
 
 cacheSolve <- function(x, ...) {
     m <- x$getinverse()
@@ -45,6 +47,7 @@ cacheSolve <- function(x, ...) {
     x$setinverse(m)
     m
 }
+
 
 ## Tests to ensure that an inverse is computed, cached and retrieved.
 ## Additionally, tests to ensure that the cache is reset when the matrix is
